@@ -28,6 +28,30 @@ class Trainer:
                  metrics: Optional[torchmetrics.Metric] = None,
                  writer: Optional[torch.utils.tensorboard.SummaryWriter] = None,
                  mlflow_tracking: bool = False) -> None:
+        """Initialize the Trainer with model, criterion, optimizer, device, metrics,
+        and logging options.
+        
+        Parameters
+        ----------
+        model : torch.nn.Module
+            The model to be trained.
+        criterion : torch.nn.Module
+            The loss function.
+        optimizer : torch.optim.Optimizer
+            The optimizer.
+        device : str, optional
+            Device to run the training on. Defaults to 'cpu'.
+        metrics : torchmetrics.Metric, optional
+            Metrics for evaluation. Defaults to None.
+        writer : torch.utils.tensorboard.SummaryWriter, optional
+            TensorBoard writer. Defaults to None.
+        mlflow_tracking : bool, optional
+            Whether to use MLflow for tracking. Defaults to False.
+
+        Returns
+        -------
+            None
+        """
         self.model = model.to(device)
         self.optimizer = optimizer
         self.criterion = criterion
@@ -38,6 +62,29 @@ class Trainer:
 
     
     def train_one_epoch(self, dataloader: torch.utils.data.DataLoader) -> float:
+        """
+        Train the model for one epoch.
+
+        Parameters
+        ----------
+        dataloader : torch.utils.data.DataLoader
+            The data loader for the training data.
+
+        Returns
+        -------
+        float
+            The average loss for the epoch.
+
+        Throws
+        ------
+        RuntimeError
+            If there is an issue during training.
+
+        Notes
+        -----
+        This method sets the model to training mode, iterates over the data loader,
+        computes the loss, performs backpropagation, and updates the model parameters.
+        """
         self.model.train()
         running_loss = 0.0
 
@@ -63,6 +110,19 @@ class Trainer:
     
 
     def validate(self, dataloader: torch.utils.data.DataLoader) -> Tuple[float, Optional[dict]]:
+        """
+        Validate the model.
+
+        Parameters
+        ----------
+        dataloader : torch.utils.data.DataLoader
+            The data loader for the validation data.
+
+        Returns
+        -------
+        Tuple[float, Optional[dict]]
+            The average loss and optional metrics for the validation data.
+        """
         self.model.eval()
         running_loss = 0.0
 
@@ -87,6 +147,22 @@ class Trainer:
             train_loader: torch.utils.data.DataLoader,
             val_loader: Optional[torch.utils.data.DataLoader] = None,
             num_epochs: int = 5):
+        """
+        Fit the model to the training data and validate on the validation data.
+        
+        Parameters
+        ----------
+        train_loader : torch.utils.data.DataLoader
+            The data loader for the training data.
+        val_loader : Optional[torch.utils.data.DataLoader], optional
+            The data loader for the validation data. Defaults to None.
+        num_epochs : int, optional
+            The number of epochs to train. Defaults to 5.
+        
+        Returns
+        -------
+            self
+        """
         for epoch in tqdm.tqdm(range(num_epochs), desc="Training", leave=False):
             train_loss = self.train_one_epoch(train_loader)
             print(f"Epoch {epoch+1}/{num_epochs}, Train Loss: {train_loss:.4f}")
@@ -118,6 +194,16 @@ class Trainer:
         return self
 
     def save_model(self, path: str) -> None:
+        """
+        Save the model to the specified path and log to MLflow if enabled.
+        Parameters
+        ----------
+        path : str
+            The path to save the model.
+        Returns
+        -------
+            None
+        """
         torch.save(self.model.state_dict(), path)
         if self.mlflow_tracking:
             mlflow.pytorch.log_model(self.model, artifact_path=path)
