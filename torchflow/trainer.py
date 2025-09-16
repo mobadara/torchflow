@@ -1,18 +1,40 @@
+"""
+A Trainer class for managing the training and validation of PyTorch models.
+
+Includes support for metrics, TensorBoard logging, and MLflow tracking.
+@author: Muyiwa J. Obadara
+@date: 2025-09-16
+@license: MIT
+@version: 1.0
+
+"""
 import torch
 import tqdm
+import mlflow
+import torchmetrics
+from typing import Optional, Tuple
+
 
 
 class Trainer:
-    def __init__(self, model, criterion, optimizer, device='cpu', metrics=None, writer=None):
+    def __init__(self,
+                 model: torch.nn.Module,
+                 criterion: torch.nn.Module,
+                 optimizer: torch.optim.Optimizer,
+                 device: str = 'cpu',
+                 metrics: Optional[torchmetrics.Metric] = None,
+                 writer: Optional[torch.utils.tensorboard.SummaryWriter] = None,
+                 mlflow_tracking: bool = False) -> None:
         self.model = model.to(device)
         self.optimizer = optimizer
         self.criterion = criterion
         self.device = device
         self.metrics = metrics
         self.writer = writer
+        self.mlflow_tracking = mlflow_tracking
 
     
-    def train_one_epoch(self, dataloader):
+    def train_one_epoch(self, dataloader: torch.utils.data.DataLoader) -> float:
         self.model.train()
         running_loss = 0.0
 
@@ -29,12 +51,15 @@ class Trainer:
             if self.writer:
                 step = self.optimizer.state_dict().get('step', 0)
                 self.writer.add_scalar('Train/Loss', loss.item(), step)
+
+            if self.mlflow_tracking:
+                mlflow.log_metric('Train/Loss', loss.item(), step=step)
             
         avg_loss = running_loss / len(dataloader.dataset)
         return avg_loss
     
 
-    def validate(self, dataloader):
+    def validate(self, dataloader: torch.utils.data.DataLoader) -> Tuple[float, Optional[dict]]:
         self.model.eval()
         running_loss = 0.0
 
@@ -55,7 +80,10 @@ class Trainer:
         return avg_loss, metric_results
     
 
-    def fit(self, train_loader, val_loader=None, num_epochs=5):
+    def fit(self,
+            train_loader: torch.utils.data.DataLoader,
+            val_loader: Optional[torch.utils.data.DataLoader] = None,
+            num_epochs: int = 5):
         for epoch in tqdm.tqdm(range(num_epochs), desc="Training", leave=False):
             train_loss = self.train_one_epoch(train_loader)
             print(f"Epoch {epoch+1}/{num_epochs}, Train Loss: {train_loss:.4f}")
@@ -71,4 +99,12 @@ class Trainer:
                     if val_metrics:
                         for name, value in val_metrics.items():
                             self.writer.add_scalar(f'Val/{name}', value, step)
+            if self.mlflow_tracking:
+                step = self.optimizer.state_dict().get('step', 0)
+                mlflow.log_metric('Train/Loss', train_loss, step=step)
+                if val_loader:
+                    mlflow.log_metric('Val/Loss', val_loss, step=step)
+                    if val_metrics:
+                        for name, value in val_metrics.items():
+                            mlflow.log_metric(f'Val/{name}', value, step=step)                
             
