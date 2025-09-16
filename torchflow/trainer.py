@@ -8,13 +8,16 @@ Includes support for metrics, TensorBoard logging, and MLflow tracking.
 @version: 1.0
 
 """
+import os
 import torch
 import tqdm
 import mlflow
 import torchmetrics
 from typing import Optional, Tuple
+from pathlib import Path
 
-
+# Create the models directory if it doesn't exist
+Path("models").mkdir(parents=True, exist_ok=True)
 
 class Trainer:
     def __init__(self,
@@ -106,5 +109,41 @@ class Trainer:
                     mlflow.log_metric('Val/Loss', val_loss, step=step)
                     if val_metrics:
                         for name, value in val_metrics.items():
-                            mlflow.log_metric(f'Val/{name}', value, step=step)                
-            
+                            mlflow.log_metric(f'Val/{name}', value, step=step)
+            self.save_model(f"models/model_epoch_{epoch+1}.pth")
+        if self.writer:
+            self.writer.flush()
+            self.writer.close()
+
+        return self
+
+    def save_model(self, path: str) -> None:
+        torch.save(self.model.state_dict(), path)
+        if self.mlflow_tracking:
+            mlflow.pytorch.log_model(self.model, artifact_path=path)
+            mlflow.log_artifact(path)
+            mlflow.log_param("model_name", self.model.__class__.__name__)
+            mlflow.log_param("model_version", self.model.__version__)
+            mlflow.log_param("optimizer", self.optimizer.__class__.__name__)
+            mlflow.log_param("criterion", self.criterion.__class__.__name__)
+            if self.metrics:
+                mlflow.log_param("metrics", [m.__class__.__name__ for m in self.metrics])
+                for m in self.metrics:
+                    mlflow.log_param(f"metric_{m.__class__.__name__}", m.__dict__)
+            mlflow.log_param("device", self.device)
+            if self.writer:
+                mlflow.log_param("tensorboard_logging", True)
+            else:
+                mlflow.log_param("tensorboard_logging", False)
+            mlflow.log_param("mlflow_tracking", self.mlflow_tracking)
+            mlflow.log_param("model_parameters", sum(p.numel() for p in self.model.parameters() if p.requires_grad))
+            mlflow.log_param("total_parameters", sum(p.numel() for p in self.model.parameters()))
+            mlflow.log_param("optimizer_parameters", sum(p.numel() for p in self.optimizer.state_dict().values() if isinstance(p, torch.Tensor)))
+            mlflow.log_param("criterion_parameters", sum(p.numel() for p in self.criterion.parameters() if p.requires_grad))
+            mlflow.log_param("training_epochs", self.optimizer.state_dict().get('step', 0))
+            mlflow.log_param("training_device", self.device)
+            mlflow.log_param("training_batch_size", self.optimizer.state_dict().get('batch_size', 'N/A'))
+            mlflow.log_param("training_learning_rate", self.optimizer.state_dict().get('lr', 'N/A'))
+            mlflow.log_param("training_loss_function", self.criterion.__class__.__name__)
+            mlflow.log_param("training_metrics", [m.__class__.__name__ for m in self.metrics] if self.metrics else 'N/A')
+            mlflow.log_param("training_optimizer", self.optimizer.__class__.__name__)
