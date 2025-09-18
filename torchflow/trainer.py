@@ -244,6 +244,7 @@ class Trainer:
             mlflow.log_param("model_parameters", sum(p.numel() for p in self.model.parameters() if p.requires_grad))
             mlflow.log_param("total_parameters", sum(p.numel() for p in self.model.parameters()))
             mlflow.log_param("optimizer_parameters", sum(p.numel() for p in self.optimizer.state_dict().values() if isinstance(p, torch.Tensor)))
+            
             # Criterion parameters if available
             if hasattr(self.criterion, 'parameters'):
                 mlflow.log_param("criterion_parameters", sum(p.numel() for p in self.criterion.parameters() if p.requires_grad))
