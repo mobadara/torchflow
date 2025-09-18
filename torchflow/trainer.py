@@ -3,7 +3,6 @@ A Trainer class for managing the training and validation of PyTorch models.
 
 Includes support for metrics, TensorBoard logging, and MLflow tracking.
 """
-import os
 
 import torch
 import tqdm
