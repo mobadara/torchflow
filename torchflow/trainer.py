@@ -4,10 +4,12 @@ A Trainer class for managing the training and validation of PyTorch models.
 Includes support for metrics, TensorBoard logging, and MLflow tracking.
 """
 
+from matplotlib.pyplot import hist
 import torch
 import tqdm
 import mlflow
 import torchmetrics
+import logging
 from typing import Optional, Tuple, Union, Any
 from pathlib import Path
 try:
@@ -17,6 +19,8 @@ except ImportError:
 
 # Create the models directory if it doesn't exist
 Path("models").mkdir(parents=True, exist_ok=True)
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 class Trainer:
@@ -152,7 +156,7 @@ class Trainer:
     def train(self,
         train_loader: torch.utils.data.DataLoader,
         val_loader: Optional[torch.utils.data.DataLoader] = None,
-        num_epochs: int = 5) -> 'Trainer':
+        num_epochs: int = 5) -> Tuple['Trainer', dict]:
         """
         Fit the model to the training data and validate on the validation data.
 
@@ -162,17 +166,21 @@ class Trainer:
             num_epochs (int, optional): The number of epochs to train. Defaults to 5.
 
         Returns:
-            Trainer: self
+            Tuple['Trainer', dict]: The trainer instance and the training history.
         """
+        history = {'train_loss': [], 'val_loss': []}
         for epoch in tqdm.tqdm(range(num_epochs), desc="Training", leave=False):
             train_loss = self.train_one_epoch(train_loader)
-            print(f"Epoch {epoch+1}/{num_epochs}, Train Loss: {train_loss:.4f}")
+            logging.info(f"Epoch {epoch+1}/{num_epochs}, Train Loss: {train_loss:.4f}")
+            history['train_loss'].append(train_loss)
             if val_loader:
                 val_loss, val_metrics = self.validate(val_loader)
-                print(f"Epoch {epoch+1}/{num_epochs}, Val Loss: {val_loss:.4f}")
+                logging.info(f"Epoch {epoch+1}/{num_epochs}, Val Loss: {val_loss:.4f}")
+                history['val_loss'].append(val_loss)
                 if val_metrics:
                     for name, value in val_metrics.items():
-                        print(f"    {name}: {value:.4f}")
+                        logging.info(f"    {name}: {value:.4f}")
+                        history.setdefault('val_' + name, []).append(value)
                 if self.writer and hasattr(self.writer, 'add_scalar'):
                     self.writer.add_scalar('Val/Loss', val_loss, epoch)
                     if val_metrics:
@@ -190,7 +198,7 @@ class Trainer:
                 self.writer.flush()
             if hasattr(self.writer, 'close'):
                 self.writer.close()
-        return self
+        return self, history
 
     def save_model(self, path: str) -> None:
         """
