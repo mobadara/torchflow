@@ -2,11 +2,6 @@
 A Trainer class for managing the training and validation of PyTorch models.
 
 Includes support for metrics, TensorBoard logging, and MLflow tracking.
-@author: Muyiwa J. Obadara
-@date: 2025-09-16
-@license: MIT
-@version: 1.0
-
 """
 import os
 
