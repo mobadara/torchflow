@@ -115,6 +115,13 @@ class Trainer:
 
         Returns:
             Tuple[float, Optional[dict]]: The average loss and optional metrics for the validation data.
+
+        Raises:
+            RuntimeError: If there is an issue during validation.
+
+        Notes:
+            This method sets the model to evaluation mode, iterates over the data loader,
+            computes the loss and metrics without updating model parameters.
         """
         self.model.eval()
         val_loss = 0.0
@@ -156,7 +163,7 @@ class Trainer:
     def train(self,
         train_loader: torch.utils.data.DataLoader,
         val_loader: Optional[torch.utils.data.DataLoader] = None,
-        num_epochs: int = 5) -> Tuple['Trainer', dict]:
+        num_epochs: int = 5) -> Tuple[torch.nn.Module, dict, 'Trainer']:
         """
         Fit the model to the training data and validate on the validation data.
 
@@ -166,7 +173,13 @@ class Trainer:
             num_epochs (int, optional): The number of epochs to train. Defaults to 5.
 
         Returns:
-            Tuple['Trainer', dict]: The trainer instance and the training history.
+            Tuple[torch.nn.Module, dict, Trainer]: The trained model, training history, and the Trainer instance.
+        
+        Raises:
+            RuntimeError: If there is an issue during training or validation.
+
+        Notes:
+            This method manages the overall training process, including logging to TensorBoard and MLflow if enabled.
         """
         history = {'train_loss': [], 'val_loss': []}
         for epoch in tqdm.tqdm(range(num_epochs), desc="Training", leave=False):
@@ -198,7 +211,7 @@ class Trainer:
                 self.writer.flush()
             if hasattr(self.writer, 'close'):
                 self.writer.close()
-        return self, history
+        return self.model, history, self
 
     def save_model(self, path: str) -> None:
         """
@@ -236,3 +249,8 @@ class Trainer:
                 mlflow.log_param("criterion_parameters", sum(p.numel() for p in self.criterion.parameters() if p.requires_grad))
             mlflow.log_param("training_loss_function", self.criterion.__class__.__name__)
             mlflow.log_param("training_optimizer", self.optimizer.__class__.__name__)
+
+            # Log optimizer hyperparameters if available
+            if hasattr(self.optimizer, 'defaults'):
+                for k, v in self.optimizer.defaults.items():
+                    mlflow.log_param(f"optimizer_{k}", v)
