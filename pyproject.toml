@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "torchflow"
+version = "0.0.1"
+description = "Lightweight PyTorch training utilities (Trainer, Callbacks, Tuner)"
+authors = [ { name = "Muyiwa J. Obadara", email = "muyiwa.j.obadara@gmail.com" } ]
+readme = "README.md"
+license = { file = "LICENSE" }
+homepage = "https://github.com/mobadara/torchflow"
+
+[tool.black]
+line-length = 88
