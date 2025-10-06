@@ -7,7 +7,7 @@ clean Trainer API, a set of commonly-used training callbacks, and an
 Optuna-backed tuner helper for simple hyperparameter searches.
 
 This repository and source package are available at
-https://github.com/mobadara/torchflow. The package is published on PyPI under
+[https://github.com/mobadara/torchflow](https://github.com/mobadara/torchflow). The package is published on PyPI under
 the name `torchflow-core`; import it as `torchflow` in your code.
 
 See the full changelog in `CHANGELOG.md` for release history.
