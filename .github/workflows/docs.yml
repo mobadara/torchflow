@@ -19,7 +19,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r docs/requirements.txt
-          pip install -e .
+          # Install package editable without runtime deps to avoid pulling heavy
+          # packages like torch during docs build.
+          pip install -e . --no-deps
       - name: Build docs
         run: |
           make -C docs apidoc || true
