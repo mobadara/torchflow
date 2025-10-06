@@ -18,7 +18,7 @@ import logging
 from typing import Optional, Tuple, Union, Any, Iterable
 from pathlib import Path
 try:
-    from torch.utils.tensorboard import SummaryWriter
+    from torch.utils.tensorboard.writer import SummaryWriter
 except Exception:
     # Don't import tensorboard SummaryWriter here; Trainer only accepts a writer
     # instance via the `writer` argument and checks for add_scalar at runtime.
