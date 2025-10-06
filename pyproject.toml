@@ -9,7 +9,9 @@ description = "Lightweight PyTorch training utilities (Trainer, Callbacks, Tuner
 authors = [ { name = "Muyiwa J. Obadara", email = "muyiwa.j.obadara@gmail.com" } ]
 readme = "README.md"
 license = { file = "LICENSE" }
-homepage = "https://github.com/mobadara/torchflow"
+
+[project.urls]
+Homepage = "https://github.com/mobadara/torchflow"
 
 [tool.black]
 line-length = 88
