@@ -1,101 +1,5 @@
 # torchflow
 
-A lightweight, dependency-minimal PyTorch training framework that provides a
-clean Trainer API, a set of commonly-used training callbacks, and an
-Optuna-backed tuner helper for hyperparameter search.
-
-This project (https://github.com/mobadara/torchflow) is designed to be
-published on PyPI and used as a small building block for training experiments
-and demos where you want sensible defaults and pluggable callbacks without the
-overhead of a large framework.
-
-## Contents
-
-- Features
-- Installation
-- Quick start
-- Callbacks
-- Tuner (Optuna)
-- Examples
-- Testing
-- Contributing
-- License
-
-## Features
-
-- Simple, readable `Trainer` for training and validation loops.
-- Callback system with lifecycle hooks (on_train_begin, on_epoch_begin,
-  on_batch_end, on_validation_end, on_epoch_end, on_train_end).
-- Built-in callbacks: EarlyStopping, ModelCheckpoint, LearningRateScheduler,
-  ReduceLROnPlateau, CSVLogger, TensorBoardCallback, and more.
-- Safe, lazy imports for optional heavy dependencies (TensorBoard, Optuna) so
-  importing the library doesn't require installing every optional package.
-Optional extras:
-
-- TensorBoard logging: `pip install tensorboard`
-- Hyperparameter tuning: `pip install optuna`
-
-## Quick start
-
-Minimal training example (pseudo-code):
-
-```python
-import torch
-# torchflow
-
-A lightweight, dependency-minimal PyTorch training framework providing a
-clean Trainer API, a set of commonly-used training callbacks, and an
-Optuna-backed tuner helper for simple hyperparameter searches.
-
-This repository and source package are available at
-https://github.com/mobadara/torchflow. The package is published on PyPI under
-the name `torchflow-core`; import it as `torchflow` in your code.
-
-See the full changelog in `CHANGELOG.md` for release history.
-
-## Contents
-
-- Features
-- Installation
-- Quick start
-- Callbacks
-- Tuner (Optuna)
-- Examples
-- Testing
-- Contributing
-- License
-
-## Features
-
-- Simple, readable `Trainer` for training and validation loops
-- Callback system with lifecycle hooks (on_train_begin, on_epoch_begin,
-  on_batch_end, on_validation_end, on_epoch_end, on_train_end)
-- Built-in callbacks: EarlyStopping, ModelCheckpoint, LearningRateScheduler,
-  ReduceLROnPlateau, CSVLogger, TensorBoardCallback
-- Safe, lazy imports for optional heavy dependencies (TensorBoard, Optuna)
-- Small Optuna `tuner` helper that builds a new Trainer for each trial using a
-  user-supplied `build_fn(trial)`
-
-## Installation
-
-Install from PyPI (package name is `torchflow-core`):
-
-```bash
-pip install torchflow-core
-```
-
-Then import normally:
-
-```python
-import torchflow
-```
-
-For development from source:
-
-For development from source:
-trainer.train(train_loader, val_loader=val_loader, num_epochs=20)
-# torchflow
-
 [![PyPI version](https://img.shields.io/pypi/v/torchflow-core.svg)](https://pypi.org/project/torchflow-core)
 
 A lightweight, dependency-minimal PyTorch training framework providing a
@@ -143,6 +47,7 @@ Then import normally:
 
 ```python
 import torchflow
+trainer.train(train_loader, val_loader=val_loader, num_epochs=20)
 ```
 
 For development from source:
@@ -235,49 +140,6 @@ python examples/tensorboard_example.py
 
 Note: `examples/tensorboard_example.py` will try to use TensorBoard; install
 python examples/lr_and_logging.py
-
-## Testing
-
-Tests use `pytest` and are located in the `tests/` directory. Some tests skip
-when optional dependencies (like `torch` or `tensorboard`) are not available.
-
-Run tests locally:
-
-```bash
-pip install -e .[dev]
-pytest -q
-```
-
-## Contributing
-
-Contributions are welcome. See `CONTRIBUTING.md` for contribution guidelines,
-the project's coding conventions, and testing instructions.
-
-## License
-
-This project is released under the terms of the license in the `LICENSE` file.
-By contributing you agree to license your changes under the same terms.
-
-## Maintainers
-
-- Author: [Muyiwa J. Obadara](https://github.com/mobadara)
-- Repository: [https://github.com/mobadara/torchflow](https://github.com/mobadara/torchflow)
-
-If you'd like to contact the maintainer, open an issue or mention the handle
-on Twitter: [@m_obadara](https://twitter.com/m_obadara)
-
-## Project & Contact
-
-- GitHub: [https://github.com/mobadara/torchflow](https://github.com/mobadara/torchflow)
-- Twitter: [https://twitter.com/m_obadara](https://twitter.com/m_obadara)
-
----
-
-python examples/tensorboard_example.py
-```
-
-Note: `examples/tensorboard_example.py` will try to use TensorBoard; install
-the `tensorboard` package if you want to run it.
 
 ## Testing
 
