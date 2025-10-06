@@ -47,7 +47,6 @@ Then import normally:
 
 ```python
 import torchflow
-trainer.train(train_loader, val_loader=val_loader, num_epochs=20)
 ```
 
 For development from source:
