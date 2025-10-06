@@ -3,7 +3,7 @@ requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "torchflow"
+name = "torchflow-core"
 version = "0.1.0"
 description = "Lightweight PyTorch training utilities (Trainer, Callbacks, Tuner)"
 authors = [ { name = "Muyiwa J. Obadara", email = "muyiwa.j.obadara@gmail.com" } ]
