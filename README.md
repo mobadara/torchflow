@@ -4,6 +4,12 @@
 
 [![Documentation](https://img.shields.io/badge/docs-online-blue.svg)](https://mobadara.github.io/torchflow/)
 
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/torchflow-core.svg)](https://pypi.org/project/torchflow-core/)
+
+[![Total downloads](https://pepy.tech/badge/torchflow-core)](https://pepy.tech/project/torchflow-core)
+
+[![Downloads (last month)](https://pepy.tech/badge/torchflow-core/month)](https://pepy.tech/project/torchflow-core)
+
 A lightweight, dependency-minimal PyTorch training framework providing a
 clean Trainer API, a set of commonly-used training callbacks, and an
 Optuna-backed tuner helper for simple hyperparameter searches.
