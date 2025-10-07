@@ -22,7 +22,7 @@ autosummary_generate = True
 
 # Mock heavy optional imports so autodoc can import modules during build
 autodoc_mock_imports = [
-    'torch', 'torchvision', 'tensorboard', 'optuna', 'mlflow', 'tensorboardX'
+    'torch', 'torchvision', 'tensorboard', 'optuna', 'mlflow', 'tensorboardX', 'tqdm'
 ]
 
 # Default autodoc options: include members and show inheritance
