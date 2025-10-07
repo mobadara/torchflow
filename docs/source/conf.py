@@ -12,8 +12,27 @@ copyright = f"{datetime.now().year}, {author}"
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
+    'sphinx.ext.autosummary',
+    'sphinx.ext.viewcode',
     'sphinx_autodoc_typehints',
 ]
+
+# Generate autosummary pages automatically
+autosummary_generate = True
+
+# Mock heavy optional imports so autodoc can import modules during build
+autodoc_mock_imports = [
+    'torch', 'torchvision', 'tensorboard', 'optuna', 'mlflow', 'tensorboardX'
+]
+
+# Default autodoc options: include members and show inheritance
+autodoc_default_options = {
+    'members': True,
+    'undoc-members': False,
+    'show-inheritance': True,
+    'inherited-members': False,
+}
+
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']

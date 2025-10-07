@@ -94,7 +94,7 @@ Example with TensorBoard logging and early stopping:
 from torchflow.callbacks import TensorBoardCallback, EarlyStopping
 
 tb = TensorBoardCallback(log_dir='runs/myrun')  # uses a safe SummaryWriter factory
-python examples/simple_train.py
+
 
 trainer = Trainer(model, criterion, optimizer, callbacks=[tb, early])
 trainer.train(train_loader, val_loader=val_loader, num_epochs=20)
@@ -139,8 +139,7 @@ python examples/lr_and_logging.py
 python examples/tensorboard_example.py
 ```
 
-Note: `examples/tensorboard_example.py` will try to use TensorBoard; install
-python examples/lr_and_logging.py
+Note: `examples/tensorboard_example.py` will try to use TensorBoard;
 
 ## Testing
 
