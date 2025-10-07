@@ -697,8 +697,123 @@ The callback writes scalars for train/val losses and any metrics present in logs
 </dd></dl>
 
 </section>
-<section id="torchflow-trainer-module">
-<h2>torchflow.trainer module<a class="headerlink" href="#torchflow-trainer-module" title="Link to this heading">¶</a></h2>
+<section id="module-torchflow.trainer">
+<span id="torchflow-trainer-module"></span><h2>torchflow.trainer module<a class="headerlink" href="#module-torchflow.trainer" title="Link to this heading">¶</a></h2>
+<p>A Trainer class for managing the training and validation of PyTorch models.</p>
+<p>Includes support for metrics, TensorBoard logging, and MLflow tracking.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="torchflow.trainer.Trainer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torchflow.trainer.</span></span><span class="sig-name descname"><span class="pre">Trainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">criterion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cpu'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">writer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mlflow_tracking</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callbacks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/trainer.html#Trainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.trainer.Trainer" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Trainer class for managing the training and validation of PyTorch models.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – The model to be trained.</p></li>
+<li><p><strong>criterion</strong> (<em>torch.nn.Module</em>) – The loss function.</p></li>
+<li><p><strong>optimizer</strong> (<em>torch.optim.Optimizer</em>) – The optimizer.</p></li>
+<li><p><strong>device</strong> (<em>str</em><em>, </em><em>optional</em>) – Device to run the training on. Defaults to ‘cpu’.</p></li>
+<li><p><strong>metrics</strong> (<em>torchmetrics.Metric</em><em> or </em><em>list</em><em>, </em><em>optional</em>) – Metrics for evaluation. Can be a single metric or a list of metrics. Defaults to None.</p></li>
+<li><p><strong>writer</strong> (<em>SummaryWriter</em><em>, </em><em>optional</em>) – TensorBoard writer. Must implement the TensorBoard SummaryWriter API. Defaults to None.</p></li>
+<li><p><strong>mlflow_tracking</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to use MLflow for tracking. Defaults to False.</p></li>
+<li><p><strong>callbacks</strong> (<em>Iterable</em><em>[</em><em>Any</em><em>] </em><em>| </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torchflow.trainer.Trainer.train_one_epoch">
+<span class="sig-name descname"><span class="pre">train_one_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataloader</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/trainer.html#Trainer.train_one_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.trainer.Trainer.train_one_epoch" title="Link to this definition">¶</a></dt>
+<dd><p>Train the model for one epoch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dataloader</strong> (<em>torch.utils.data.DataLoader</em>) – The data loader for the training data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The average loss for the epoch.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If there is an issue during training.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method sets the model to training mode, iterates over the data loader,
+computes the loss, performs backpropagation, and updates the model parameters.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torchflow.trainer.Trainer.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataloader</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/trainer.html#Trainer.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.trainer.Trainer.validate" title="Link to this definition">¶</a></dt>
+<dd><p>Validate the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dataloader</strong> (<em>torch.utils.data.DataLoader</em>) – The data loader for the validation data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The average loss and optional metrics for the validation data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[float, Optional[dict]]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If there is an issue during validation.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method sets the model to evaluation mode, iterates over the data loader,
+computes the loss and metrics without updating model parameters.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torchflow.trainer.Trainer.train">
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/trainer.html#Trainer.train"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.trainer.Trainer.train" title="Link to this definition">¶</a></dt>
+<dd><p>Fit the model to the training data and validate on the validation data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_loader</strong> (<em>torch.utils.data.DataLoader</em>) – The data loader for the training data.</p></li>
+<li><p><strong>val_loader</strong> (<em>Optional</em><em>[</em><em>torch.utils.data.DataLoader</em><em>]</em><em>, </em><em>optional</em>) – The data loader for the validation data. Defaults to None.</p></li>
+<li><p><strong>num_epochs</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of epochs to train. Defaults to 5.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The trained model, training history, and the Trainer instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[torch.nn.Module, dict, <a class="reference internal" href="#torchflow.trainer.Trainer" title="torchflow.trainer.Trainer">Trainer</a>]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If there is an issue during training or validation.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method manages the overall training process, including logging to TensorBoard and MLflow if enabled.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torchflow.trainer.Trainer.save_model">
+<span class="sig-name descname"><span class="pre">save_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/trainer.html#Trainer.save_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.trainer.Trainer.save_model" title="Link to this definition">¶</a></dt>
+<dd><p>Save the model to the specified path and log to MLflow if enabled.
+:type path: <span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>
+:param path: The path to save the model.
+:type path: str</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-torchflow.tuner">
 <span id="torchflow-tuner-module"></span><h2>torchflow.tuner module<a class="headerlink" href="#module-torchflow.tuner" title="Link to this heading">¶</a></h2>
@@ -899,7 +1014,16 @@ Provides modules for building, training, and evaluating neural networks with eas
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#torchflow-trainer-module">torchflow.trainer module</a></li>
+<li><a class="reference internal" href="#module-torchflow.trainer">torchflow.trainer module</a><ul>
+<li><a class="reference internal" href="#torchflow.trainer.Trainer"><code class="docutils literal notranslate"><span class="pre">Trainer</span></code></a><ul>
+<li><a class="reference internal" href="#torchflow.trainer.Trainer.train_one_epoch"><code class="docutils literal notranslate"><span class="pre">Trainer.train_one_epoch()</span></code></a></li>
+<li><a class="reference internal" href="#torchflow.trainer.Trainer.validate"><code class="docutils literal notranslate"><span class="pre">Trainer.validate()</span></code></a></li>
+<li><a class="reference internal" href="#torchflow.trainer.Trainer.train"><code class="docutils literal notranslate"><span class="pre">Trainer.train()</span></code></a></li>
+<li><a class="reference internal" href="#torchflow.trainer.Trainer.save_model"><code class="docutils literal notranslate"><span class="pre">Trainer.save_model()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li><a class="reference internal" href="#module-torchflow.tuner">torchflow.tuner module</a><ul>
 <li><a class="reference internal" href="#torchflow.tuner.tune"><code class="docutils literal notranslate"><span class="pre">tune()</span></code></a></li>
 <li><a class="reference internal" href="#torchflow.tuner.example_build_fn"><code class="docutils literal notranslate"><span class="pre">example_build_fn()</span></code></a></li>
