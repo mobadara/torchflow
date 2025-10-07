@@ -232,8 +232,470 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
 </section>
-<section id="torchflow-callbacks-module">
-<h2>torchflow.callbacks module<a class="headerlink" href="#torchflow-callbacks-module" title="Link to this heading">¶</a></h2>
+<section id="module-torchflow.callbacks">
+<span id="torchflow-callbacks-module"></span><h2>torchflow.callbacks module<a class="headerlink" href="#module-torchflow.callbacks" title="Link to this heading">¶</a></h2>
+<p>Callbacks for training lifecycle events.</p>
+<p>Provides a base Callback class and a couple of useful implementations
+like EarlyStopping and ModelCheckpoint. These are designed to be simple
+and lightweight so they can be used in unit tests and examples.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="torchflow.callbacks.make_summary_writer">
+<span class="sig-prename descclassname"><span class="pre">torchflow.callbacks.</span></span><span class="sig-name descname"><span class="pre">make_summary_writer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/callbacks.html#make_summary_writer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.make_summary_writer" title="Link to this definition">¶</a></dt>
+<dd><p>Safely create a SummaryWriter if tensorboard is available.</p>
+<p>Returns None when tensorboard or its dependencies are not installed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>log_dir</strong> (<em>str</em><em> | </em><em>None</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torchflow.callbacks.Callback">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torchflow.callbacks.</span></span><span class="sig-name descname"><span class="pre">Callback</span></span><a class="reference internal" href="_modules/torchflow/callbacks.html#Callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.Callback" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base callback. Subclass and override the desired methods.</p>
+<p>Methods receive the trainer instance (self) or context information
+so callbacks can control training (for example, stopping early).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="torchflow.callbacks.Callback.on_train_begin">
+<span class="sig-name descname"><span class="pre">on_train_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/callbacks.html#Callback.on_train_begin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.Callback.on_train_begin" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>trainer</strong> (<em>Any</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torchflow.callbacks.Callback.on_train_end">
+<span class="sig-name descname"><span class="pre">on_train_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/callbacks.html#Callback.on_train_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.Callback.on_train_end" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>trainer</strong> (<em>Any</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torchflow.callbacks.Callback.on_epoch_begin">
+<span class="sig-name descname"><span class="pre">on_epoch_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/callbacks.html#Callback.on_epoch_begin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.Callback.on_epoch_begin" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>trainer</strong> (<em>Any</em>)</p></li>
+<li><p><strong>epoch</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torchflow.callbacks.Callback.on_epoch_end">
+<span class="sig-name descname"><span class="pre">on_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/callbacks.html#Callback.on_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.Callback.on_epoch_end" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>trainer</strong> (<em>Any</em>)</p></li>
+<li><p><strong>epoch</strong> (<em>int</em>)</p></li>
+<li><p><strong>logs</strong> (<em>dict</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torchflow.callbacks.Callback.on_batch_end">
+<span class="sig-name descname"><span class="pre">on_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/callbacks.html#Callback.on_batch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.Callback.on_batch_end" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>trainer</strong> (<em>Any</em>)</p></li>
+<li><p><strong>batch</strong> (<em>int</em>)</p></li>
+<li><p><strong>logs</strong> (<em>dict</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torchflow.callbacks.Callback.on_validation_end">
+<span class="sig-name descname"><span class="pre">on_validation_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/callbacks.html#Callback.on_validation_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.Callback.on_validation_end" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>trainer</strong> (<em>Any</em>)</p></li>
+<li><p><strong>epoch</strong> (<em>int</em>)</p></li>
+<li><p><strong>logs</strong> (<em>dict</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torchflow.callbacks.EarlyStopping">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torchflow.callbacks.</span></span><span class="sig-name descname"><span class="pre">EarlyStopping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">monitor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'val_loss'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'min'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/callbacks.html#EarlyStopping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.EarlyStopping" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#torchflow.callbacks.Callback" title="torchflow.callbacks.Callback"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callback</span></code></a></p>
+<p>Stop training when a monitored metric has stopped improving.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>monitor</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – metric name to monitor (e.g. ‘val_loss’).</p></li>
+<li><p><strong>patience</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – epochs with no improvement after which training will be stopped.</p></li>
+<li><p><strong>min_delta</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – minimum change to qualify as improvement.</p></li>
+<li><p><strong>mode</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – ‘min’ or ‘max’ depending whether lower is better.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torchflow.callbacks.EarlyStopping.on_validation_end">
+<span class="sig-name descname"><span class="pre">on_validation_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/callbacks.html#EarlyStopping.on_validation_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.EarlyStopping.on_validation_end" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>trainer</strong> (<em>Any</em>)</p></li>
+<li><p><strong>epoch</strong> (<em>int</em>)</p></li>
+<li><p><strong>logs</strong> (<em>dict</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torchflow.callbacks.ModelCheckpoint">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torchflow.callbacks.</span></span><span class="sig-name descname"><span class="pre">ModelCheckpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monitor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'val_loss'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_best_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'min'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/callbacks.html#ModelCheckpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.ModelCheckpoint" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#torchflow.callbacks.Callback" title="torchflow.callbacks.Callback"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callback</span></code></a></p>
+<p>Save the model after every epoch or only when monitored metric improves.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> (<em>str</em>)</p></li>
+<li><p><strong>monitor</strong> (<em>str</em>)</p></li>
+<li><p><strong>save_best_only</strong> (<em>bool</em>)</p></li>
+<li><p><strong>mode</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torchflow.callbacks.ModelCheckpoint.on_validation_end">
+<span class="sig-name descname"><span class="pre">on_validation_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/callbacks.html#ModelCheckpoint.on_validation_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.ModelCheckpoint.on_validation_end" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>trainer</strong> (<em>Any</em>)</p></li>
+<li><p><strong>epoch</strong> (<em>int</em>)</p></li>
+<li><p><strong>logs</strong> (<em>dict</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torchflow.callbacks.LambdaCallback">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torchflow.callbacks.</span></span><span class="sig-name descname"><span class="pre">LambdaCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">on_train_begin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_train_end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_epoch_begin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_epoch_end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_batch_end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_validation_end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/callbacks.html#LambdaCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.LambdaCallback" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#torchflow.callbacks.Callback" title="torchflow.callbacks.Callback"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callback</span></code></a></p>
+<p>Create a callback from simple callables.</p>
+<p>Usage: LambdaCallback(on_epoch_end=lambda trainer, epoch, logs: …)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>on_train_begin</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>)</p></li>
+<li><p><strong>on_train_end</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>)</p></li>
+<li><p><strong>on_epoch_begin</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>)</p></li>
+<li><p><strong>on_epoch_end</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>)</p></li>
+<li><p><strong>on_batch_end</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>)</p></li>
+<li><p><strong>on_validation_end</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torchflow.callbacks.LambdaCallback.on_train_begin">
+<span class="sig-name descname"><span class="pre">on_train_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/callbacks.html#LambdaCallback.on_train_begin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.LambdaCallback.on_train_begin" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>trainer</strong> (<em>Any</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torchflow.callbacks.LambdaCallback.on_train_end">
+<span class="sig-name descname"><span class="pre">on_train_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/callbacks.html#LambdaCallback.on_train_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.LambdaCallback.on_train_end" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>trainer</strong> (<em>Any</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torchflow.callbacks.LambdaCallback.on_epoch_begin">
+<span class="sig-name descname"><span class="pre">on_epoch_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/callbacks.html#LambdaCallback.on_epoch_begin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.LambdaCallback.on_epoch_begin" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>trainer</strong> (<em>Any</em>)</p></li>
+<li><p><strong>epoch</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torchflow.callbacks.LambdaCallback.on_epoch_end">
+<span class="sig-name descname"><span class="pre">on_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/callbacks.html#LambdaCallback.on_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.LambdaCallback.on_epoch_end" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>trainer</strong> (<em>Any</em>)</p></li>
+<li><p><strong>epoch</strong> (<em>int</em>)</p></li>
+<li><p><strong>logs</strong> (<em>dict</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torchflow.callbacks.LambdaCallback.on_batch_end">
+<span class="sig-name descname"><span class="pre">on_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/callbacks.html#LambdaCallback.on_batch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.LambdaCallback.on_batch_end" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>trainer</strong> (<em>Any</em>)</p></li>
+<li><p><strong>batch</strong> (<em>int</em>)</p></li>
+<li><p><strong>logs</strong> (<em>dict</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torchflow.callbacks.LambdaCallback.on_validation_end">
+<span class="sig-name descname"><span class="pre">on_validation_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/callbacks.html#LambdaCallback.on_validation_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.LambdaCallback.on_validation_end" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>trainer</strong> (<em>Any</em>)</p></li>
+<li><p><strong>epoch</strong> (<em>int</em>)</p></li>
+<li><p><strong>logs</strong> (<em>dict</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torchflow.callbacks.LearningRateScheduler">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torchflow.callbacks.</span></span><span class="sig-name descname"><span class="pre">LearningRateScheduler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scheduler</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schedule_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_at</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'epoch'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/callbacks.html#LearningRateScheduler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.LearningRateScheduler" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#torchflow.callbacks.Callback" title="torchflow.callbacks.Callback"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callback</span></code></a></p>
+<p>Adjust learning rate according to a schedule.</p>
+<p>You may provide either a PyTorch lr_scheduler instance (object with a
+.step(…) method) or a simple schedule function that accepts the epoch
+number and returns either a single lr or a list/tuple of lrs (one per
+param_group).</p>
+<p>By default the scheduler.step() will be called at the end of each epoch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scheduler</strong> (<em>Optional</em><em>[</em><em>Any</em><em>]</em>)</p></li>
+<li><p><strong>schedule_fn</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>)</p></li>
+<li><p><strong>step_at</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torchflow.callbacks.LearningRateScheduler.on_epoch_end">
+<span class="sig-name descname"><span class="pre">on_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/callbacks.html#LearningRateScheduler.on_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.LearningRateScheduler.on_epoch_end" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>trainer</strong> (<em>Any</em>)</p></li>
+<li><p><strong>epoch</strong> (<em>int</em>)</p></li>
+<li><p><strong>logs</strong> (<em>dict</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torchflow.callbacks.ReduceLROnPlateau">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torchflow.callbacks.</span></span><span class="sig-name descname"><span class="pre">ReduceLROnPlateau</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">monitor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'val_loss'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_lr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'min'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-08</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cooldown</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/callbacks.html#ReduceLROnPlateau"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.ReduceLROnPlateau" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#torchflow.callbacks.Callback" title="torchflow.callbacks.Callback"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callback</span></code></a></p>
+<p>Reduce learning rate when a monitored metric has stopped improving.</p>
+<p>A lightweight wrapper around the common behavior. If you already have
+a torch.optim.lr_scheduler.ReduceLROnPlateau instance you can use
+<cite>LearningRateScheduler(scheduler=your_scheduler)</cite> instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>monitor</strong> (<em>str</em>)</p></li>
+<li><p><strong>factor</strong> (<em>float</em>)</p></li>
+<li><p><strong>patience</strong> (<em>int</em>)</p></li>
+<li><p><strong>min_lr</strong> (<em>float</em>)</p></li>
+<li><p><strong>mode</strong> (<em>str</em>)</p></li>
+<li><p><strong>min_delta</strong> (<em>float</em>)</p></li>
+<li><p><strong>cooldown</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torchflow.callbacks.ReduceLROnPlateau.on_validation_end">
+<span class="sig-name descname"><span class="pre">on_validation_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/callbacks.html#ReduceLROnPlateau.on_validation_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.ReduceLROnPlateau.on_validation_end" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>trainer</strong> (<em>Any</em>)</p></li>
+<li><p><strong>epoch</strong> (<em>int</em>)</p></li>
+<li><p><strong>logs</strong> (<em>dict</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torchflow.callbacks.CSVLogger">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torchflow.callbacks.</span></span><span class="sig-name descname"><span class="pre">CSVLogger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">append</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">','</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/callbacks.html#CSVLogger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.CSVLogger" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#torchflow.callbacks.Callback" title="torchflow.callbacks.Callback"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callback</span></code></a></p>
+<p>Log epoch-level metrics to a CSV file.</p>
+<p>Writes a header the first time and appends rows for each epoch. Accepts
+a logs dict (as passed to on_epoch_end) and writes key/value pairs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>)</p></li>
+<li><p><strong>append</strong> (<em>bool</em>)</p></li>
+<li><p><strong>separator</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torchflow.callbacks.CSVLogger.on_epoch_end">
+<span class="sig-name descname"><span class="pre">on_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/callbacks.html#CSVLogger.on_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.CSVLogger.on_epoch_end" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>trainer</strong> (<em>Any</em>)</p></li>
+<li><p><strong>epoch</strong> (<em>int</em>)</p></li>
+<li><p><strong>logs</strong> (<em>dict</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="torchflow.callbacks.TensorBoardCallback">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">torchflow.callbacks.</span></span><span class="sig-name descname"><span class="pre">TensorBoardCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">writer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/callbacks.html#TensorBoardCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.TensorBoardCallback" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#torchflow.callbacks.Callback" title="torchflow.callbacks.Callback"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callback</span></code></a></p>
+<p>Log metrics to TensorBoard SummaryWriter.</p>
+<p>Provide either an existing SummaryWriter instance or a log_dir to create one.
+The callback writes scalars for train/val losses and any metrics present in logs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>writer</strong> (<em>Optional</em><em>[</em><em>Any</em><em>]</em>)</p></li>
+<li><p><strong>log_dir</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="torchflow.callbacks.TensorBoardCallback.on_epoch_end">
+<span class="sig-name descname"><span class="pre">on_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/callbacks.html#TensorBoardCallback.on_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.TensorBoardCallback.on_epoch_end" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>trainer</strong> (<em>Any</em>)</p></li>
+<li><p><strong>epoch</strong> (<em>int</em>)</p></li>
+<li><p><strong>logs</strong> (<em>dict</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torchflow.callbacks.TensorBoardCallback.on_train_end">
+<span class="sig-name descname"><span class="pre">on_train_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/callbacks.html#TensorBoardCallback.on_train_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.callbacks.TensorBoardCallback.on_train_end" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>trainer</strong> (<em>Any</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="torchflow-trainer-module">
 <h2>torchflow.trainer module<a class="headerlink" href="#torchflow-trainer-module" title="Link to this heading">¶</a></h2>
@@ -246,7 +708,7 @@ via a user-supplied <code class="docutils literal notranslate"><span class="pre"
 doesn’t require Optuna to be installed.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="torchflow.tuner.tune">
-<span class="sig-prename descclassname"><span class="pre">torchflow.tuner.</span></span><span class="sig-name descname"><span class="pre">tune</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">build_fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'min'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">study_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">storage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_progress</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchflow.tuner.tune" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">torchflow.tuner.</span></span><span class="sig-name descname"><span class="pre">tune</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">build_fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'min'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">study_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">storage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_progress</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/tuner.html#tune"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.tuner.tune" title="Link to this definition">¶</a></dt>
 <dd><p>Run an Optuna study over <code class="docutils literal notranslate"><span class="pre">n_trials</span></code>.</p>
 <p>build_fn should accept an Optuna trial and return a dict with keys
 <code class="docutils literal notranslate"><span class="pre">'model'</span></code>, <code class="docutils literal notranslate"><span class="pre">'optimizer'</span></code>, <code class="docutils literal notranslate"><span class="pre">'criterion'</span></code> and optionally
@@ -272,7 +734,7 @@ the trainer (falls back to last training loss, or inf).</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="torchflow.tuner.example_build_fn">
-<span class="sig-prename descclassname"><span class="pre">torchflow.tuner.</span></span><span class="sig-name descname"><span class="pre">example_build_fn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchflow.tuner.example_build_fn" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">torchflow.tuner.</span></span><span class="sig-name descname"><span class="pre">example_build_fn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/tuner.html#example_build_fn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.tuner.example_build_fn" title="Link to this definition">¶</a></dt>
 <dd><p>Tiny example build_fn for docs/tests.</p>
 <p>Samples a learning rate and a hidden-size, constructs a tiny MLP and
 returns the dict expected by <code class="docutils literal notranslate"><span class="pre">tune</span></code>.</p>
@@ -292,7 +754,7 @@ in environments where those extras are not installed.</p>
 - ensure_list(x): ensure the value is a list (wraps non-iterables)</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="torchflow.utils.set_seed">
-<span class="sig-prename descclassname"><span class="pre">torchflow.utils.</span></span><span class="sig-name descname"><span class="pre">set_seed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchflow.utils.set_seed" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">torchflow.utils.</span></span><span class="sig-name descname"><span class="pre">set_seed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/utils.html#set_seed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.utils.set_seed" title="Link to this definition">¶</a></dt>
 <dd><p>Set random seeds for reproducible runs.</p>
 <p>This sets the seed for Python’s <code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code>, optionally NumPy and
 PyTorch if they are available. Passing <code class="docutils literal notranslate"><span class="pre">None</span></code> disables explicit seeding.</p>
@@ -308,7 +770,7 @@ PyTorch if they are available. Passing <code class="docutils literal notranslate
 
 <dl class="py function">
 <dt class="sig sig-object py" id="torchflow.utils.ensure_list">
-<span class="sig-prename descclassname"><span class="pre">torchflow.utils.</span></span><span class="sig-name descname"><span class="pre">ensure_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchflow.utils.ensure_list" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">torchflow.utils.</span></span><span class="sig-name descname"><span class="pre">ensure_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/utils.html#ensure_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.utils.ensure_list" title="Link to this definition">¶</a></dt>
 <dd><p>Return <code class="docutils literal notranslate"><span class="pre">x</span></code> as a list. If <code class="docutils literal notranslate"><span class="pre">x</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code> returns an empty list.</p>
 <p>Useful for normalizing API inputs that accept a single value or a list.</p>
 <dl class="field-list simple">
@@ -323,7 +785,7 @@ PyTorch if they are available. Passing <code class="docutils literal notranslate
 
 <dl class="py function">
 <dt class="sig sig-object py" id="torchflow.utils.to_device">
-<span class="sig-prename descclassname"><span class="pre">torchflow.utils.</span></span><span class="sig-name descname"><span class="pre">to_device</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchflow.utils.to_device" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">torchflow.utils.</span></span><span class="sig-name descname"><span class="pre">to_device</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/torchflow/utils.html#to_device"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#torchflow.utils.to_device" title="Link to this definition">¶</a></dt>
 <dd><p>Move PyTorch tensors or modules (and nested containers) to <code class="docutils literal notranslate"><span class="pre">device</span></code>.</p>
 <p>Works with tensors, <code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code>, lists, tuples and dicts. If
 PyTorch is not available this is a no-op.</p>
@@ -390,7 +852,53 @@ Provides modules for building, training, and evaluating neural networks with eas
             <ul>
 <li><a class="reference internal" href="#">torchflow package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#torchflow-callbacks-module">torchflow.callbacks module</a></li>
+<li><a class="reference internal" href="#module-torchflow.callbacks">torchflow.callbacks module</a><ul>
+<li><a class="reference internal" href="#torchflow.callbacks.make_summary_writer"><code class="docutils literal notranslate"><span class="pre">make_summary_writer()</span></code></a></li>
+<li><a class="reference internal" href="#torchflow.callbacks.Callback"><code class="docutils literal notranslate"><span class="pre">Callback</span></code></a><ul>
+<li><a class="reference internal" href="#torchflow.callbacks.Callback.on_train_begin"><code class="docutils literal notranslate"><span class="pre">Callback.on_train_begin()</span></code></a></li>
+<li><a class="reference internal" href="#torchflow.callbacks.Callback.on_train_end"><code class="docutils literal notranslate"><span class="pre">Callback.on_train_end()</span></code></a></li>
+<li><a class="reference internal" href="#torchflow.callbacks.Callback.on_epoch_begin"><code class="docutils literal notranslate"><span class="pre">Callback.on_epoch_begin()</span></code></a></li>
+<li><a class="reference internal" href="#torchflow.callbacks.Callback.on_epoch_end"><code class="docutils literal notranslate"><span class="pre">Callback.on_epoch_end()</span></code></a></li>
+<li><a class="reference internal" href="#torchflow.callbacks.Callback.on_batch_end"><code class="docutils literal notranslate"><span class="pre">Callback.on_batch_end()</span></code></a></li>
+<li><a class="reference internal" href="#torchflow.callbacks.Callback.on_validation_end"><code class="docutils literal notranslate"><span class="pre">Callback.on_validation_end()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torchflow.callbacks.EarlyStopping"><code class="docutils literal notranslate"><span class="pre">EarlyStopping</span></code></a><ul>
+<li><a class="reference internal" href="#torchflow.callbacks.EarlyStopping.on_validation_end"><code class="docutils literal notranslate"><span class="pre">EarlyStopping.on_validation_end()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torchflow.callbacks.ModelCheckpoint"><code class="docutils literal notranslate"><span class="pre">ModelCheckpoint</span></code></a><ul>
+<li><a class="reference internal" href="#torchflow.callbacks.ModelCheckpoint.on_validation_end"><code class="docutils literal notranslate"><span class="pre">ModelCheckpoint.on_validation_end()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torchflow.callbacks.LambdaCallback"><code class="docutils literal notranslate"><span class="pre">LambdaCallback</span></code></a><ul>
+<li><a class="reference internal" href="#torchflow.callbacks.LambdaCallback.on_train_begin"><code class="docutils literal notranslate"><span class="pre">LambdaCallback.on_train_begin()</span></code></a></li>
+<li><a class="reference internal" href="#torchflow.callbacks.LambdaCallback.on_train_end"><code class="docutils literal notranslate"><span class="pre">LambdaCallback.on_train_end()</span></code></a></li>
+<li><a class="reference internal" href="#torchflow.callbacks.LambdaCallback.on_epoch_begin"><code class="docutils literal notranslate"><span class="pre">LambdaCallback.on_epoch_begin()</span></code></a></li>
+<li><a class="reference internal" href="#torchflow.callbacks.LambdaCallback.on_epoch_end"><code class="docutils literal notranslate"><span class="pre">LambdaCallback.on_epoch_end()</span></code></a></li>
+<li><a class="reference internal" href="#torchflow.callbacks.LambdaCallback.on_batch_end"><code class="docutils literal notranslate"><span class="pre">LambdaCallback.on_batch_end()</span></code></a></li>
+<li><a class="reference internal" href="#torchflow.callbacks.LambdaCallback.on_validation_end"><code class="docutils literal notranslate"><span class="pre">LambdaCallback.on_validation_end()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torchflow.callbacks.LearningRateScheduler"><code class="docutils literal notranslate"><span class="pre">LearningRateScheduler</span></code></a><ul>
+<li><a class="reference internal" href="#torchflow.callbacks.LearningRateScheduler.on_epoch_end"><code class="docutils literal notranslate"><span class="pre">LearningRateScheduler.on_epoch_end()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torchflow.callbacks.ReduceLROnPlateau"><code class="docutils literal notranslate"><span class="pre">ReduceLROnPlateau</span></code></a><ul>
+<li><a class="reference internal" href="#torchflow.callbacks.ReduceLROnPlateau.on_validation_end"><code class="docutils literal notranslate"><span class="pre">ReduceLROnPlateau.on_validation_end()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torchflow.callbacks.CSVLogger"><code class="docutils literal notranslate"><span class="pre">CSVLogger</span></code></a><ul>
+<li><a class="reference internal" href="#torchflow.callbacks.CSVLogger.on_epoch_end"><code class="docutils literal notranslate"><span class="pre">CSVLogger.on_epoch_end()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#torchflow.callbacks.TensorBoardCallback"><code class="docutils literal notranslate"><span class="pre">TensorBoardCallback</span></code></a><ul>
+<li><a class="reference internal" href="#torchflow.callbacks.TensorBoardCallback.on_epoch_end"><code class="docutils literal notranslate"><span class="pre">TensorBoardCallback.on_epoch_end()</span></code></a></li>
+<li><a class="reference internal" href="#torchflow.callbacks.TensorBoardCallback.on_train_end"><code class="docutils literal notranslate"><span class="pre">TensorBoardCallback.on_train_end()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li><a class="reference internal" href="#torchflow-trainer-module">torchflow.trainer module</a></li>
 <li><a class="reference internal" href="#module-torchflow.tuner">torchflow.tuner module</a><ul>
 <li><a class="reference internal" href="#torchflow.tuner.tune"><code class="docutils literal notranslate"><span class="pre">tune()</span></code></a></li>
